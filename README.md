@@ -82,4 +82,15 @@
 * 경로 최적화: ViewPath 클래스를 사용하여 개발 과정에서 경로를 최적화하고, 이를 통해 애플리케이션의 성능과 유지보수성을 향상시켰습니다.
 * JavaScript 네임스페이스 모듈화: JavaScript 코드의 구조화와 유지보수성을 향상시키기 위해 네임스페이스를 사용한 모듈화를 진행했습니다.
 
+#### ERD
+<img src="https://github.com/cdplayground/syusyu/assets/86580625/4394b1dc-c4d5-4e29-adb5-dd7e4b6cf129">
+
+
 #### 메인화면
+
+
+
+#### 발표영상
+<a href="https://youtu.be/H8s0jUxJAV4?t=3">
+    <img src="https://github.com/cdplayground/syusyu/assets/86580625/0eaf44cc-20cf-4127-9798-52349ad505c0" width="560" height="315" alt="발표영상">
+</a>
