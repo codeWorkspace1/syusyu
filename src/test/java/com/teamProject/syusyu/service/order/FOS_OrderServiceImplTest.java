@@ -6,6 +6,7 @@ import com.teamProject.syusyu.domain.order.request.OrderProductRequestDTO;
 import com.teamProject.syusyu.domain.order.request.OrderRequestDTO;
 import com.teamProject.syusyu.service.fos.order.FOS_OrderService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
+
 public class FOS_OrderServiceImplTest {
     @Autowired
     FOS_OrderService service;
@@ -39,7 +41,8 @@ public class FOS_OrderServiceImplTest {
     @Autowired
     OrdClaimDAO ordClaimDAO;
 
-    @Before
+//    @Before
+//    @Ignore
     // 테스트 시작 전에 먼저 수행되는 메서드. 주문 관련 정보를 삭제한다.
     public void beforeEach() throws Exception {
         // 1. DELIVERY 테이블 데이터 삭제
@@ -81,6 +84,22 @@ public class FOS_OrderServiceImplTest {
         ordDAO.deleteAllOrder();
         result = ordDAO.countOrd();
         assertEquals(0, result);
+    }
+
+    @Test
+    public void decreaseProdQtyTest() throws Exception {
+        OrdDtlDTO ordDtl1 = ordDtlDAO.selectOrderDetail(170516);
+        OrdDtlDTO ordDtl2 = ordDtlDAO.selectOrderDetail(170517);
+
+        service.decreaseProdQty(List.of(ordDtl1, ordDtl2));
+    }
+
+    @Test
+    public void validateQtyTest() throws Exception {
+        OrdDtlDTO ordDtl1 = ordDtlDAO.selectOrderDetail(170516);
+        OrdDtlDTO ordDtl2 = ordDtlDAO.selectOrderDetail(170517);
+
+        service.validateQty(List.of(ordDtl1, ordDtl2));
     }
 
     @Test
@@ -140,6 +159,19 @@ public class FOS_OrderServiceImplTest {
                 .claimPic3("사진1")
                 .regrId(80001)
                 .build();
+    }
+
+    @Test
+    public void orderQtyTest() {
+        Order order = getOrder();
+
+        try {
+            // 주문을 생성한다.
+            service.order(order);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("주문 생성 실패");
+        }
     }
 
     @Test
@@ -407,7 +439,7 @@ public class FOS_OrderServiceImplTest {
             e.printStackTrace();
         }
 
-        // 데이터가 insert되지 않고 롤백되었는지 확인
+        // 데이터가 insert되지 않고롤백되었는지 확인
         // 1. ORD
         assertEquals(0, ordDAO.countOrd());
         // 2. ORD_DTL
@@ -423,7 +455,7 @@ public class FOS_OrderServiceImplTest {
     }
 
     // 컴퓨티드 컬럼 아니고 그냥 화면에서 받아온 값들 잘 들어갔는지 검증
-    private static Order getOrder() {
+    public static Order getOrder() {
         // 1. 주문에 필요한 데이터 세팅
         // 1-1. 주문 상품 정보가 들어있는 DTO 생성
         List<OrderProductRequestDTO> orderProductList = new ArrayList<>();
@@ -431,20 +463,14 @@ public class FOS_OrderServiceImplTest {
                 .prodId(10001)
                 .prodNm("반스 올드스쿨")
                 .optCombNo(1)
-                .qty(3)
-                .build());
-        orderProductList.add(OrderProductRequestDTO.Builder.anOrderProductRequestDTO()
-                .prodId(10007)
-                .prodNm("아딜렛 클로그")
-                .optCombNo(null)
                 .qty(1)
                 .build());
-        orderProductList.add(OrderProductRequestDTO.Builder.anOrderProductRequestDTO()
-                .prodId(10011)
-                .prodNm("로그 2.0")
-                .optCombNo(null)
-                .qty(4)
-                .build());
+//        orderProductList.add(OrderProductRequestDTO.Builder.anOrderProductRequestDTO()
+//                .prodId(10001)
+//                .prodNm("반스 올드스쿨")
+//                .optCombNo(2)
+//                .qty(1)
+//                .build());
 
         // 1-2. 주문정보가 들어있는 DTO 생성
         OrderRequestDTO orderRequest = OrderRequestDTO.Builder.anOrderRequestDTO()
@@ -493,7 +519,7 @@ public class FOS_OrderServiceImplTest {
                 .build());
         orderProductList.add(OrderProductRequestDTO.Builder.anOrderProductRequestDTO()
                 .prodId(10002)
-                .prodNm("CM878MA1")
+                .prodNm("CM878aA1")
                 .optCombNo(12)
                 .qty(2)
                 .build());

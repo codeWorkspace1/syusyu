@@ -3,18 +3,27 @@ package com.teamProject.syusyu.service.fos.order.impl;
 import com.teamProject.syusyu.dao.member.DlvAddrDAO;
 import com.teamProject.syusyu.dao.member.MemberDao;
 import com.teamProject.syusyu.dao.order.*;
-import com.teamProject.syusyu.dao.order.OrderInfoDAO;
+import com.teamProject.syusyu.dao.product.ProdOptDAO;
 import com.teamProject.syusyu.domain.member.CouponDTO;
 import com.teamProject.syusyu.domain.member.DlvAddrDTO;
 import com.teamProject.syusyu.domain.member.MemberDTO;
 import com.teamProject.syusyu.domain.order.*;
+import com.teamProject.syusyu.domain.product.ProdOptDTO;
 import com.teamProject.syusyu.service.base.order.OrderServiceBase;
 import com.teamProject.syusyu.service.fos.order.FOS_OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.retry.support.RetrySynchronizationManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,10 +39,10 @@ public class FOS_OrderServiceImpl extends OrderServiceBase implements FOS_OrderS
     private final OrdDlvAddrDAO ordDlvAddrDAO;
     private final OrderInfoDAO orderInfoDAO;
     private final OrdClaimDAO ordClaimDAO;
-    private final DeliveryDAO deliveryDAO;
+    private final ProdOptDAO prodOptDAO;
 
     @Autowired
-    public FOS_OrderServiceImpl(MemberDao memberDao, DlvAddrDAO dlvAddrDAO, CartProdDAO cartProdDAO, OrdDAO ordDAO, OrdDtlDAO ordDtlDAO, OrdStusHistDAO ordStusHistDAO, PayDAO payDAO, PayRsltDAO payRsltDAO, OrdDlvAddrDAO ordDlvAddrDAO, OrderInfoDAO orderInfoDAO, OrdClaimDAO ordClaimDAO, DeliveryDAO deliveryDAO) {
+    public FOS_OrderServiceImpl(MemberDao memberDao, DlvAddrDAO dlvAddrDAO, CartProdDAO cartProdDAO, OrdDAO ordDAO, OrdDtlDAO ordDtlDAO, OrdStusHistDAO ordStusHistDAO, PayDAO payDAO, PayRsltDAO payRsltDAO, OrdDlvAddrDAO ordDlvAddrDAO, OrderInfoDAO orderInfoDAO, OrdClaimDAO ordClaimDAO, ProdOptDAO prodOptDAO) {
         this.memberDao = memberDao;
         this.dlvAddrDAO = dlvAddrDAO;
         this.cartProdDAO = cartProdDAO;
@@ -45,7 +54,7 @@ public class FOS_OrderServiceImpl extends OrderServiceBase implements FOS_OrderS
         this.ordDlvAddrDAO = ordDlvAddrDAO;
         this.orderInfoDAO = orderInfoDAO;
         this.ordClaimDAO = ordClaimDAO;
-        this.deliveryDAO = deliveryDAO;
+        this.prodOptDAO = prodOptDAO;
     }
 
     /**
@@ -125,9 +134,17 @@ public class FOS_OrderServiceImpl extends OrderServiceBase implements FOS_OrderS
      * @since 2023/07/07
      */
     @Override
+    @Retryable(
+        value = SQLException.class,
+        maxAttempts = 3,
+        backoff = @Backoff(delay = 100)
+    )
     @Transactional(rollbackFor = Exception.class)
     public void order(Order order) throws Exception {
-        // 1. 주문 정보를 DB에 삽입한다.
+        // 0-1. 재고수량 감소
+        decreaseProdQty(order.getOrdDtlList());
+
+        // 1. 주문 정보를 DB에 삽입한다
         createOrder(order.getOrd());
 
         // 2. 주문상세정보와 주문상태이력 정보를 DB에 삽입한다.
@@ -141,6 +158,47 @@ public class FOS_OrderServiceImpl extends OrderServiceBase implements FOS_OrderS
 
         // 5. 주문배송지 정보를 DB에 삽입한다.
         addDeliveryAddressForOrder(order.getOrdDlvAddr(), order.getOrd().getOrdNo());
+    }
+
+    @Override
+    public void decreaseProdQty(List<OrdDtlDTO> ordDtlList) throws Exception {
+        // 0. 재고가 있는지 검증한다.
+        validateQty(ordDtlList);
+
+        // 1. 재고수량을 감소시킨다.
+        for (OrdDtlDTO ordDtlDTO : ordDtlList) {
+            Map<String, Integer> param = new HashMap<>();
+            param.put("qty", ordDtlDTO.getQty());
+            param.put("optCombNo", ordDtlDTO.getOptCombNo());
+
+            int decreaseProdQtyResult = prodOptDAO.decreaseProdQty(param);
+
+            if (decreaseProdQtyResult == 0) {
+                throw new OptimisticLockingFailureException("재고수량 감소 중 충돌 발생");
+            }
+        }
+
+    }
+
+    @Override
+    public void validateQty(List<OrdDtlDTO> ordDtlList) throws Exception {
+        // 1. 내가 구매하려는 상품의 재고수량을 체크한다.
+        // 1-1. 상품의 재고수량을 가져온다.
+        int[] optCombNoArr = ordDtlList.stream().mapToInt(OrdDtlDTO::getOptCombNo).toArray();
+        List<ProdOptDTO> prodQtyList = prodOptDAO.selectProductQty(optCombNoArr);
+
+        // 2. 재고수량이 0개 이하인 상품이 있을 경우 처리를 한다.
+        for (ProdOptDTO prodOpt : prodQtyList) {
+            // 2-1. 조회해온 리스트에서 옵션 번호 뽑기
+            int optCombNo = prodOpt.getOptCombNo();
+            // 2-2. 위에 ordDtlList에서 옵션 번호에 해당하는 OrdDtlDTO 찾기
+           OrdDtlDTO ordDtlDTO = ordDtlList.stream().filter(ordDtl -> ordDtl.getOptCombNo().equals(optCombNo)).findFirst().orElse(null);
+
+           // 현재 재고수량(prodOpt)보다 구매하려는 수량이 더 많으면 구매 불가능
+           if (ordDtlDTO.getQty() > prodOpt.getInvQty()) {
+               throw new Exception("수량이 부족합니다");
+           }
+        }
     }
 
     /**
