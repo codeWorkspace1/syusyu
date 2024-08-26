@@ -121,6 +121,7 @@
 
 <table>
    <tr>
+      <td><img src="./gitImg/prod"></td>
       <td><img height="450" alt="폴더구조" src="https://github.com/cdplayground/syusyu/assets/86580625/b28f2594-1a2a-4c2f-a1bd-0272f05b2e4b"></td>
       <td><img height="450" alt="viewpath" src="https://github.com/cdplayground/syusyu/assets/86580625/68d1d955-0b90-4412-bab4-98f27d5f5bf1"></td>
       <td><img width="500" alt="git 커밋 메시지 컨벤션" src="https://github.com/cdplayground/syusyu/assets/86580625/be5e4c9d-280b-4666-908e-323e16d31ae4"></td>
