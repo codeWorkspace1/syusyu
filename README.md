@@ -121,16 +121,15 @@
 
 <table>
    <tr>
-      <td><img src="./gitImg/prod"></td>
-      <td><img height="450" alt="폴더구조" src="https://github.com/cdplayground/syusyu/assets/86580625/b28f2594-1a2a-4c2f-a1bd-0272f05b2e4b"></td>
-      <td><img height="450" alt="viewpath" src="https://github.com/cdplayground/syusyu/assets/86580625/68d1d955-0b90-4412-bab4-98f27d5f5bf1"></td>
-      <td><img width="500" alt="git 커밋 메시지 컨벤션" src="https://github.com/cdplayground/syusyu/assets/86580625/be5e4c9d-280b-4666-908e-323e16d31ae4"></td>
+      <td><img height="450" alt="폴더구조" src="./gitImg/folder structure.png"></td>
+      <td><img height="450" alt="viewpath" src="./gitImg/viewPath.png"></td>
+      <td><img width="500" alt="git 커밋 메시지 컨벤션" src="./gitImg/gitConvention.png"></td>
    </tr>
 </table>
 <table>
    <tr>
-      <td><img width="500" alt="노션 칸반보드" src="https://github.com/cdplayground/syusyu/assets/86580625/f3a3773d-d3df-4720-b221-eac6bb2f5970"></td>
-      <td><img width="500" alt="WBS" src="https://github.com/cdplayground/syusyu/assets/86580625/06bbf4c9-36b6-4c3a-9204-ef78a2afce23"></td>
+      <td><img width="500" alt="노션 칸반보드" src="./gitImg/board.png"></td>
+      <td><img width="500" alt="WBS" src="./gitImg/WBS.png"></td>
    </tr>
 </table>
 
@@ -141,7 +140,7 @@
 - 42개의 테이블과 575개의 컬럼
 - 테이블들은 크게 회원, 상품, 주문, 게시판의 4개 모듈로 구성
 - draw.io로 데이터베이스 구조와 관계를 시각화하는 ERD 작성에 사용되었습니다.
-<img src="https://github.com/cdplayground/syusyu/assets/86580625/4394b1dc-c4d5-4e29-adb5-dd7e4b6cf129">
+<img alt="ERD" src="./gitImg/ERD.jpg">
 
 <br><br><br> 
 ### 사용자 페이지
@@ -150,7 +149,7 @@
 - 메인 슬라이드 배너: 최신 프로모션, 이벤트 및 신상품 정보 등의 공지사항을 확인 할 수 있습니다.
 - 랭킹, 인기, 최신 형식으로 상품을 확인할 수 있습니다.
 - 로그인과 상단 메뉴에서 다양한 신발 카테고리를 확인할 수 있습니다.
-<img src="https://github.com/cdplayground/syusyu/assets/86580625/8534e84f-dfe2-476c-a3ce-6a2a2e75bb43" width="1000">
+<img alt="main" src="./gitImg/main.gif" width="1000">
 
 <br><br><br> 
 ### 회원가입 및 로그인
@@ -159,8 +158,8 @@
 
 <table>
    <tr>
-      <td><img width="500" alt="회원가입" src="https://github.com/cdplayground/syusyu/assets/86580625/bcf109a5-e10b-47a4-98f5-17b8e6627a9e"></td>
-      <td><img width="500" alt="로그인" src="https://github.com/cdplayground/syusyu/assets/86580625/7c5878a8-aa55-41c6-9781-b195394dd301"></td>
+      <td><img width="500" alt="회원가입" src="./gitImg/join.png"></td>
+      <td><img width="500" alt="로그인" src="./gitImg/join2.png"></td>
    </tr>
 </table>
 
@@ -169,7 +168,7 @@
 - **상단 메뉴**: "신발" 항목을 클릭하면, 다양한 신발 카테고리가 드롭다운 형태로 나타납니다.
 - **선택한 신발 페이지**: 신제품순, 낮은 가격순, 높은 가격순, 할인순, 인기순, 리뷰순 등 다양한 기준으로 상품을 정렬하여 볼 수 있습니다.
 - 카테고리가 서버와 자주 통신하여 첫 화면에서 늦게 뜨는 문제를 해결하기 위해 Interceptor Pattern을 사용했습니다. 이 패턴을 통해 요청과 응답 사이에 특정 처리를 삽입하여 공통적으로 같은 화면에 카테고리를 빠르게 표시할 수 있도록 구현했습니다.
-<img src="https://github.com/cdplayground/syusyu/assets/86580625/e14d3bc3-fa26-464f-a206-d5cea862e0a1" width="800">
+<img alt="상품리스트" src="./gitImg/prodList.gif" width="800">
 
 <br><br><br> 
 ### 상품 상세
@@ -181,7 +180,7 @@
   - 상품 사이즈 선택: 원하는 상품의 사이즈를 선택하여 장바구니에 넣을 수 있습니다.
   - 옵션 가격 확인: 사이즈별로 적용된 옵션 가격을 확인할 수 있습니다.
   - 구매 수량 조절: + 버튼이나 수량 입력을 통해 구매 수량을 조절할 수 있습니다. 최대 구매 수량을 초과하면 경고창이 표시되며, 추가 수량을 선택할 수 없습니다.
-<img src="https://github.com/cdplayground/syusyu/assets/86580625/72465497-71ab-4a1e-8bc8-fb677aa2da81" width="800">
+<img alt="상품상세" src="./gitImg/prodDtail.gif" width="800">
 
 <br><br><br> 
 ### 장바구니
@@ -189,7 +188,7 @@
 - **상품 정보**: 각 상품의 이미지, 색상, 사이즈, 가격 정보를 확인할 수 있습니다.
 - **상품 금액**: 총 상품 금액, 총 할인 금액, 배송비, 결제 예상 금액을 확인할 수 있습니다.
 - **수량 조절**: + 버튼이나 수량 입력을 통해 상품 수량을 조절할 수 있습니다. + 버튼의 빠른 반복 클릭으로 인한 서버 부하를 최소화하기 위해 자바스크립트 Debounce 기능을 사용하여 연이어 호출되는 함수들 중 마지막 함수만 호출되도록 구현하였습니다.
-<img width="800" alt="장바구니" src="https://github.com/cdplayground/syusyu/assets/86580625/0cd882a3-3d1b-4101-809b-2e4c261d9b1e">
+<img width="800" alt="장바구니" src="./gitImg/cart.png">
 
 <br><br><br> 
 ### 주문 결제
@@ -200,14 +199,14 @@
 - **결제 금액**: 총 상품 금액, 총 할인 금액, 배송비, 최종 결제 금액을 확인할 수 있습니다.
 - **결제 수단**: 신용카드, 네이버페이, 카카오페이, 페이코 등 다양한 결제 방법 중 하나를 선택할 수 있습니다. 신용카드 결제 서비스는 PortOne을 통해 구현되었습니다.
 - **결제 완료**: "주문하기" 버튼을 클릭하여 결제를 완료합니다.
-<img src="https://github.com/cdplayground/syusyu/assets/86580625/6fe6aa57-9f45-493a-afee-0a71447153a7" width="800">
+<img src="./gitImg/order.png" width="800">
 
 <br><br><br> 
 ### 주문/배송 조회
 - **주문 목록**: 지난 주문들을 확인할 수 있습니다.
 - **기간 필터**: 주문 내역을 1개월, 3개월, 6개월, 12개월 단위로 필터링할 수 있습니다.
 - **상세 보기**: 각 주문의 상세 정보를 확인할 수 있습니다.
-<img src="https://github.com/cdplayground/syusyu/assets/86580625/708caac5-eb7b-4ce3-bfe3-2c61948a538f" alt="주문/배송 조회" width="800">
+<img src="./gitImg/delivery.png" alt="주문/배송 조회" width="800">
 
 <br><br><br> 
 ### 주문 상세
@@ -216,7 +215,7 @@
 - **배송지 정보**: 받는 사람의 이름, 주소, 연락처 등을 확인할 수 있습니다.
 - **결제 금액**: 상품 금액, 할인 금액, 최종 결제 금액을 확인할 수 있습니다.
 - **결제 정보**: 결제 방법과 결제 일시를 확인할 수 있습니다.
-<img src="https://github.com/cdplayground/syusyu/assets/86580625/5791048a-7791-4fbf-b89a-38d90aa69afe" alt="주문 상세" width="800">
+<img src="./gitImg/orderDtail.png" alt="주문 상세" width="800">
 
 <br><br><br> 
 ### 게시판
@@ -226,9 +225,9 @@
 
 <table>
    <tr>
-      <td><img src="https://github.com/cdplayground/syusyu/assets/86580625/16210ea6-c894-4bf9-bdc5-a327732d88e5" alt="공지사항"></td>
-      <td><img src="https://github.com/cdplayground/syusyu/assets/86580625/9f7142b2-aa55-46f7-9fd4-eddadb2cf900" alt="FAQ"></td>
-      <td><img src="https://github.com/cdplayground/syusyu/assets/86580625/4590f3a6-19dc-4da7-a004-790cffe8d882" alt="1:1 문의"></td>
+      <td><img src="./gitImg/board1.png" alt="공지사항"></td>
+      <td><img src="./gitImg/board2.png" alt="FAQ"></td>
+      <td><img src="./gitImg/board3.png" alt="1:1 문의"></td>
    </tr>
 </table>
 
@@ -246,7 +245,7 @@
 - **상품 상세 설명**: 상품에 대한 상세 설명을 입력합니다. 텍스트 편집기(Summernote)를 사용하여 다양한 서식으로 내용을 작성할 수 있습니다. 
 - **상품 정보**: 모델명, 제조사, 제조국, 브랜드, 소재 등을 입력할 수 있습니다.
 - **저장하기**: 저장하면 상품 조회 화면으로 넘어가서 등록되었는지 확인할 수 있습니다.
-<img src="https://github.com/cdplayground/syusyu/assets/86580625/73bbe075-5c25-4cc2-bc53-c17fdae7e3da" width="800">
+<img src="./gitImg/prodRegistration.png" width="800" alt="상품 등록">
 
 <br><br><br> 
 ### 상품 조회
@@ -254,7 +253,7 @@
 - **상품 조회 결과**: 첫 화면은 상품 등록순으로 조회되며, 검색 필터를 통해 상품 목록, 수정/삭제, 상세보기를 확인할 수 있습니다.
 - **상품 정보**: 상품번호, 상품명, 판매 상태, 재고 수량, 가격 정보 등이 표시됩니다.
 - **DataTables**: 상품 조회 테이블 플러그인으로 사용되었습니다.
-<img width="800" alt="상품 조회" src="https://github.com/cdplayground/syusyu/assets/86580625/c596117b-2f57-4ccc-a37f-89a2e356165a">
+<img width="800" alt="상품 조회" src="./gitImg/prodSearch.png">
 
 <br><br><br> 
 ### 주문 확인 / 발송 관리
@@ -263,7 +262,7 @@
 - **주문 목록 결과**: 주문번호, 주문상세번호, 발송처리일, 택배사, 송장번호, 구매처명, 구매자 ID, 수령인, 주문 상태, 주문 일시, 상품 ID, 상품명, 옵션 등의 정보를 확인할 수 있습니다.
 - **주문 확인 및 발송 처리**: 주문을 확인하고 발송 처리를 할 수 있습니다. 처리하면 사용자 페이지에서 주문 내역에 배송중, 배송완료로 바뀝니다.
 - **Tabulator**: 주문 확인/발송관리 테이블 플러그인으로 사용되었습니다.
-<img width="800" alt="주문 확인/발송 관리" src="https://github.com/cdplayground/syusyu/assets/86580625/d078592f-bb67-4dac-8abb-a7662609624e">
+<img width="800" alt="주문 확인/발송 관리" src="./gitImg/orderShip.png">
 
 <br><br><br> 
 ### 배송 현황 관리
@@ -272,7 +271,7 @@
 - **Tabulator**: 주문 확인/발송관리 테이블 플러그인으로 사용되었습니다.
 - **엑셀 다운로드**: 배송 목록을 엑셀 파일로 다운로드할 수 있습니다.
 - **배송 완료 처리**: 선택한 주문을 배송 완료로 처리할 수 있습니다.
-<img width="800" alt="배송 현황 관리" src="https://github.com/cdplayground/syusyu/assets/86580625/b08284b7-e480-4298-bf15-bacd015d9e53">
+<img width="800" alt="배송 현황 관리" src="./gitImg/deliveryStatus.png">
 
 <br><br><br> 
 ### 게시판
@@ -283,16 +282,16 @@
 
 <table>
    <tr>
-      <td><img src="https://github.com/cdplayground/syusyu/assets/86580625/d5f2501d-e70a-483b-a2ab-9f60be1fea1e" alt="공지사항 관리" width="400"></td>
-      <td><img src="https://github.com/cdplayground/syusyu/assets/86580625/8b5293d8-e263-4471-a76d-ac2aa91ec69e" alt="FAQ 관리" width="400"></td>
-      <td><img src="https://github.com/cdplayground/syusyu/assets/86580625/44911f02-df08-4b5c-ab73-265d63bc126f" alt="문의사항 관리" width="400"></td>
+      <td><img src="./gitImg/boardManagement1.png" alt="공지사항 관리" width="400"></td>
+      <td><img src="./gitImg/boardManagement2.png" alt="FAQ 관리" width="400"></td>
+      <td><img src="./gitImg/boardManagement3.png" alt="문의사항 관리" width="400"></td>
    </tr>
 </table>
 
 <br><br><br><br>  
 ## 발표영상
 <a href="https://youtu.be/H8s0jUxJAV4?t=3">
-    <img src="https://github.com/cdplayground/syusyu/assets/86580625/0eaf44cc-20cf-4127-9798-52349ad505c0" width="560" height="315" alt="발표영상">
+    <img src="./gitImg/present.png" width="560" height="315" alt="발표영상">
 </a>
 
 <br><br><br><br>  
